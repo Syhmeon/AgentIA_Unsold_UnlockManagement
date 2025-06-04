@@ -2,6 +2,7 @@ import streamlit as st
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
+import ast
 
 # Streamlit App Title
 st.title("Interactive Token Unlock Schedule with Market Depth Provisioning")
@@ -63,8 +64,8 @@ st.sidebar.header("Bear Market Periods")
 bear_market_periods = st.sidebar.text_input("Bear Market Periods (e.g., [(10, 16), (28, 34)])", value="[(10, 16), (28, 34)]")
 bear_market_coefficient = st.sidebar.number_input("Bear Market Sell Pressure Coefficient", value=1.5, step=0.1)
 try:
-    bear_market_periods = eval(bear_market_periods)
-except:
+    bear_market_periods = ast.literal_eval(bear_market_periods)
+except ValueError:
     st.sidebar.error("Invalid format for bear market periods. Use [(start, end), ...]")
 
 # Vesting Schedule Parameters
@@ -113,8 +114,8 @@ liquidity_provisioning = st.sidebar.text_input(
     value="{15: 500000, 25: 750000}"
 )
 try:
-    liquidity_provisioning = eval(liquidity_provisioning)
-except:
+    liquidity_provisioning = ast.literal_eval(liquidity_provisioning)
+except ValueError:
     st.sidebar.error("Invalid format for liquidity provisioning. Use {month: amount, ...}")
 
 dynamic_market_depth = [market_depth_threshold]
